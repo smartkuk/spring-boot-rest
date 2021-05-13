@@ -1,0 +1,14 @@
+server:
+  port: ${APP_PORT:8080}
+
+spring:
+  profiles: 
+    active: default
+
+app:
+  name: ${APP_NAME:spring-boot-rest}
+
+---
+
+spring:
+  profiles: dev
