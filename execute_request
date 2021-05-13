@@ -1,0 +1,6 @@
+{
+  "remoteUrls": [
+  	"http://localhost:8080/host/info",
+  	"http://localhost:8080/profiles"
+  ]
+}

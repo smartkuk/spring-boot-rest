@@ -5,6 +5,12 @@ spring:
   profiles: 
     active: default
 
+logging:
+  level:
+    root: ${ROOT_LEVEL:info}
+    com:
+      smartkuk: ${APP_LEVEL:debug}
+
 app:
   name: ${APP_NAME:spring-boot-rest}
 
