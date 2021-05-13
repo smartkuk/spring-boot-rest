@@ -14,8 +14,6 @@
     ./gradlew clean build bootBuildImage --imageName=spring-boot-rest:latest
     ```
 
-    
-
 * Only docker build
 
     ```sh
