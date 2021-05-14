@@ -1,5 +1,7 @@
 package com.smartkuk.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +9,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.smartkuk.service.RemoteCountService;
 
 @RestController
 public class HostController {
@@ -23,6 +28,9 @@ public class HostController {
 
 	@Autowired
 	private AppEnvConfig appConfig;
+
+	@Autowired
+	private RemoteCountService remoteService;
 
 	@GetMapping("/host/info")
 	public HostInformation getHostInfo() {
@@ -66,5 +74,20 @@ public class HostController {
 		});
 
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/client/metrics")
+	public HttpEntity<Map<String, Integer>> getClientMetrics() {
+		logger.debug("Started getClientMetric()");
+		logger.info("Started getClientMetric()");
+
+		return ResponseEntity.ok(remoteService.getCount());
+	}
+
+	@PostMapping("/client/metrics/reset")
+	public HttpEntity<Boolean> resetClientMetrics() {
+		logger.debug("Started resetClientMetrics()");
+		logger.info("Started resetClientMetrics()");
+		return ResponseEntity.ok(remoteService.resetCount());
 	}
 }
