@@ -2,7 +2,7 @@ server:
   port: ${APP_PORT:8080}
 
 spring:
-  application:    name: ${APP_NAME:green}
+  application:    name: ${APP_NAME:latest}
   profiles:
     active: default
 
@@ -13,7 +13,7 @@ logging:
       smartkuk: ${APP_LEVEL:debug}
 
 app:
-  name: ${APP_NAME:green}
+  name: ${APP_NAME:latest}
 
 ---
 
