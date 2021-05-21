@@ -2,6 +2,7 @@ package com.smartkuk.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -9,10 +10,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Component
 public class RemoteCountService {
-	private final Map<String, Integer> clientCounter;
+	private final Map<String, AtomicInteger> clientCounter;
 
 	public RemoteCountService() {
-		clientCounter = new HashMap<String, Integer>();
+		clientCounter = new HashMap<String, AtomicInteger>();
 	}
 
 	public void write(Boolean excluded) {
@@ -20,15 +21,15 @@ public class RemoteCountService {
 				.getRequest();
 		if (!excluded) {
 			if (clientCounter.containsKey(request.getRemoteAddr())) {
-				Integer currentNumber = clientCounter.get(request.getRemoteAddr());
-				clientCounter.put(request.getRemoteAddr(), currentNumber + 1);
+				AtomicInteger currentNumber = clientCounter.get(request.getRemoteAddr());
+				currentNumber.incrementAndGet();
 			} else {
-				clientCounter.put(request.getRemoteAddr(), 1);
+				clientCounter.put(request.getRemoteAddr(), new AtomicInteger(1));
 			}
 		}
 	}
 
-	public Map<String, Integer> getCount() {
+	public Map<String, AtomicInteger> getCount() {
 		return clientCounter;
 	}
 
