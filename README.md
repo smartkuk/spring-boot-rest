@@ -65,3 +65,21 @@
     ```sh
     docker push smartkuk/spring-boot-rest:latest
     ```
+
+## Gradle build & docker build, tag, push
+
+
+* Prepare variable
+
+	```sh
+	image_tag=blue
+	docker_hub_username=smartkuk
+	```
+	
+* Run command
+
+	```sh
+	./gradlew clean build bootBuildImage --imageName=spring-boot-rest:${image_tag}
+	docker tag spring-boot-rest:${image_tag} ${docker_hub_username}/spring-boot-rest:${image_tag}
+	docker push ${docker_hub_username}/spring-boot-rest:${image_tag}
+	```
