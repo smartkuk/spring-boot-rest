@@ -1,8 +1,6 @@
 package com.smartkuk.controller;
 
 import com.smartkuk.service.RemoteCountService;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,11 +74,10 @@ public class HostController {
 	}
 
 	@GetMapping("/client/metrics")
-	public HttpEntity<Map<String, AtomicInteger>> getClientMetrics() {
+	public HttpEntity<HostMetrics> getClientMetrics() {
 		logger.debug("Started getClientMetric()");
 		logger.info("Started getClientMetric()");
-
-		return ResponseEntity.ok(remoteService.getCount());
+		return ResponseEntity.ok(new HostMetrics(appConfig.getName(), remoteService.getCount()));
 	}
 
 	@PostMapping("/client/metrics/reset")
