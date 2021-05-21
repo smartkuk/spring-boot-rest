@@ -1,18 +1,15 @@
 package com.smartkuk;
 
+import com.smartkuk.service.RemoteCountService;
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.smartkuk.service.RemoteCountService;
 
 public class ClientCountFilter implements Filter {
 
@@ -28,11 +25,8 @@ public class ClientCountFilter implements Filter {
 			throws IOException, ServletException {
 		logger.debug("doFilter");
 		HttpServletRequest req = (HttpServletRequest) request;
-		if ("/client/metrics".equals(req.getRequestURI())) {
-			logger.debug("exclude {}", req.getRequestURI());
-			return;
-		}
-		remoteCountService.write();
+		Boolean excluded = "/client/metrics".equals(req.getRequestURI());
+		remoteCountService.write(excluded);
 		chain.doFilter(request, response);
 	}
 }
